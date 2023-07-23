@@ -33,6 +33,7 @@ int play_wav(const char *FILE_PATH)
     Uint8 *wavStart;
     Uint32 wavLength;
 
+    /* Load the WAV file */
     if (SDL_LoadWAV(FILE_PATH, &wavSpec, &wavStart, &wavLength) == NULL) 
     {
         std::cerr << "Error: " << FILE_PATH << " could not be loaded as an audio file." << std::endl;
@@ -46,6 +47,7 @@ int play_wav(const char *FILE_PATH)
     wavSpec.callback = MyAudioCallback;
     wavSpec.userdata = &audio;
 
+    /* Open the audio device */
     SDL_AudioDeviceID device = SDL_OpenAudioDevice(NULL, 0, &wavSpec, NULL, 
             SDL_AUDIO_ALLOW_ANY_CHANGE);
 
@@ -55,6 +57,7 @@ int play_wav(const char *FILE_PATH)
         return 1;
     }
 
+    /* Start playing */
     SDL_PauseAudioDevice(device, 0);
 
     while (audio.length > 0) 
