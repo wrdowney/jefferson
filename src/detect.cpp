@@ -3,7 +3,7 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include <string>
 #include <iostream>
-#include "play_wav.h"
+#include "AudioFile.h"
 #include "detect.h"
 using namespace cv;
 using namespace std;
@@ -20,6 +20,8 @@ int main (int argc, const char *argv[])
 
     vector<Rect> faces;
 
+    AudioFile audio_file("look_at_me.wav");
+
     int empty_frame_count = 0;
     while (true)
     {
@@ -30,15 +32,15 @@ int main (int argc, const char *argv[])
         {
             cout << "No faces detected" << endl;
             empty_frame_count++;
-            if (empty_frame_count > 10)
+            if (empty_frame_count % 10 == 0)
             {
-                cout << "Exiting" << endl;
-                break;
+                cout << "Playing audio" << endl;
+                audio_file.play();
             }
-            continue;
+        } else {
+            empty_frame_count = 0;
         }
 
-        empty_frame_count = 0;
 
         for (Rect face : faces)
         {
