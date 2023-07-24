@@ -1,11 +1,12 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_mixer.h>
+#include <string>
 #include "AudioFile.h"
 
 using namespace std;
 
-AudioFile::AudioFile(const char *FILE_PATH): chunk(Mix_LoadWAV(FILE_PATH), Mix_FreeChunk) {
+AudioFile::AudioFile(const std::string &FILE_PATH, int volume): chunk(Mix_LoadWAV(FILE_PATH.c_str()), Mix_FreeChunk) {
     if (SDL_Init(SDL_INIT_AUDIO) != 0)
     {
         cerr << "SDL could not initialize! SDL Error: " << SDL_GetError() << endl;
