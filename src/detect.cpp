@@ -1,10 +1,10 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/objdetect/objdetect.hpp>
-
 #include <string>
 #include <iostream>
-
+#include "play_wav.h"
+#include "detect.h"
 using namespace cv;
 using namespace std;
 
@@ -19,6 +19,8 @@ int main (int argc, const char *argv[])
     face_cascade.load(classifier_loc);
 
     vector<Rect> faces;
+
+    int empty_frame_count = 0;
     while (true)
     {
         face_cascade.detectMultiScale(video_stream, faces, 1.1, 4, CASCADE_SCALE_IMAGE, Size(30, 30));
@@ -27,7 +29,16 @@ int main (int argc, const char *argv[])
         if (faces.empty())
         {
             cout << "No faces detected" << endl;
+            empty_frame_count++;
+            if (empty_frame_count > 10)
+            {
+                cout << "Exiting" << endl;
+                break;
+            }
+            continue;
         }
+
+        empty_frame_count = 0;
 
         for (Rect face : faces)
         {

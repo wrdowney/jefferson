@@ -1,3 +1,5 @@
+#include <iostream>
+#include <SDL2/SDL.h>
 #include "play_wav.h"
 
 struct AudioData 
