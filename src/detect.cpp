@@ -43,9 +43,8 @@ int main (int argc, const char *argv[])
         
         if (faces.empty())
         {
-            cout << "No faces detected" << endl;
             empty_frame_count++;
-            if (empty_frame_count % 10 == 0)
+            if (empty_frame_count % 40 == 0)
             {
                 cout << "Playing audio" << endl;
                 audio_file.play();
@@ -62,7 +61,9 @@ int main (int argc, const char *argv[])
         }
 
         imshow("Facial Detection", video_stream);
-        if (waitKey(10) == 27) break;
+        if (waitKey(30) == 27) break;
     }
+    Mix_Quit();
+    SDL_Quit();
     return 0;
 }
