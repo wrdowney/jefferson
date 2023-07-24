@@ -24,6 +24,12 @@ AudioFile::AudioFile(const std::string &FILE_PATH, int volume): chunk(Mix_LoadWA
     }
 }
 
+AudioFile::~AudioFile()
+{
+    Mix_FreeChunk(chunk.get());
+    chunk.release();
+}
+
 void AudioFile::play()
 {
     int channel = Mix_PlayChannel(-1, chunk.get(), 0);
