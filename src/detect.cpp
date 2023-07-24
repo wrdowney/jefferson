@@ -3,6 +3,8 @@
 #include <opencv2/objdetect/objdetect.hpp>
 #include <string>
 #include <iostream>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_mixer.h>
 #include "AudioFile.h"
 #include "detect.h"
 using namespace cv;
@@ -20,7 +22,18 @@ int main (int argc, const char *argv[])
 
     vector<Rect> faces;
 
-    AudioFile audio_file("look_at_me.wav");
+
+    if (SDL_INIT_AUDIO != 0)
+    {
+        cerr << "SDL could not initialize! SDL Error: " << SDL_GetError() << endl;
+    }
+
+    if (Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) != 0)
+    {
+        cerr << "SDL_mixer could not initialize! SDL_mixer Error: " << Mix_GetError() << endl;
+    }
+
+    AudioFile audio_file("look_at_me.wav", 32);
 
     int empty_frame_count = 0;
     while (true)
