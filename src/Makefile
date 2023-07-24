@@ -1,8 +1,8 @@
-main : detect.o play_wav.o
-	g++ detect.o play_wav.o -o main `pkg-config --cflags --libs opencv4 sdl2`
+main : detect.o AudioFile.o
+	g++ detect.o AudioFile.o -o main -lSDL2 -lSDL2_mixer `pkg-config --cflags --libs opencv4`
 
 detect.o : detect.cpp detect.h
 	g++ -c detect.cpp `pkg-config --cflags --libs opencv4`
 
-play_wav.o : play_wav.cpp play_wav.h
-	g++ -c play_wav.cpp `pkg-config --cflags --libs sdl2`
+AudioFile.o : AudioFile.cpp AudioFile.h
+	g++ -c AudioFile.cpp `pkg-config --cflags --libs sdl2`
